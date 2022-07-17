@@ -26,11 +26,11 @@ public class ProfessorBean implements Serializable{
 	private List<Professor> listaDeProfessores = new ArrayList<Professor>();
 	
 	private boolean existe = false;
-	private boolean mostrarTurmasBoolean =  false;
+	private boolean mostrarTurmasDispBoolean =  false;
 	
 	public void salvar() {
 		professor = daoGenericP.salvarMerge(professor);
-		getListDeProfessores();
+		atualizar();
 		novoProf();
 	}
 	
@@ -99,7 +99,7 @@ public class ProfessorBean implements Serializable{
 	}
 	
 	public void mostrarTurmasBollean() {
-		mostrarTurmasBoolean = !mostrarTurmasBoolean;	
+		mostrarTurmasDispBoolean = !mostrarTurmasDispBoolean;	
 	}
 	
 	public boolean isExiste() {
@@ -107,7 +107,7 @@ public class ProfessorBean implements Serializable{
 	}
 
 	public boolean isMostrarTurmasBoolean() {
-		return mostrarTurmasBoolean;
+		return mostrarTurmasDispBoolean;
 	}
 
 	public List<Professor> getListaDeProfessores() {

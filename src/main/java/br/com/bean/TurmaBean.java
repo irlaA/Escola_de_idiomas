@@ -27,6 +27,7 @@ public class TurmaBean implements Serializable {
 	private AlunoDao<Aluno> daoAluno;
 	private ProfessorDao<Professor> daoProf = new ProfessorDao<Professor>();
 	private DAOgeneric<Turma> daoGenericT = new DAOgeneric<Turma>();
+	private DAOgeneric<Professor> daoGenericP = new DAOgeneric<Professor>();
 	private List<Professor> listaProfessoresDisp =  new ArrayList<Professor>();
 
 	private boolean existe = false;
@@ -102,8 +103,9 @@ public class TurmaBean implements Serializable {
 	
 	//professor 
 	public List<Professor> professoresDisponiveis(){
-		listaProfessoresDisp =  daoProf.getListaProfessores();
-		return listaProfessoresDisp;
+		// listaProfessoresDisp =  daoGenericP.getListaEndidadeId(Professor.class);
+		 //return listaProfessoresDisp;
+		return daoProf.getListaProfessores();
 	}
 	
 	
@@ -159,14 +161,6 @@ public class TurmaBean implements Serializable {
 
 	public boolean isMostrarAlunoBoolean() {
 		return mostrarAlunoBoolean;
-	}
-
-	public List<Professor> getListaProfessoresDisp() {
-		return listaProfessoresDisp;
-	}
-
-	public void setListaProfessoresDisp(List<Professor> listaProfessoresDisp) {
-		this.listaProfessoresDisp = listaProfessoresDisp;
 	}
 
 	

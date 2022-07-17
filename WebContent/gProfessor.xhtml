@@ -58,10 +58,10 @@
 					</p:column>
 				</p:dataTable>
 				
-				<p:commandButton action="#{professorBean.mostrarTurmasBollean()}" value="Adicionar" />
+		<!--	<p:commandButton action="#{professorBean.mostrarTurmasBollean()}" value="Adicionar" /> -->
 				
-				<p:dataTable value="#{professorBean.turmasDisponiveis()}" var="td" 
-							rendered="#{professorBean.mostrarTurmasBoolean}">
+				<p:dataTable value="#{professorBean.turmasDisponiveis()}" var="td" >
+		<!-- 					rendered="#{professorBean.mostrarTurmasBoolean}">   -->
 						
 						<p:column headerText="Idioma">
 				<!--		<f:facet name="header">Idioma</f:facet>		-->

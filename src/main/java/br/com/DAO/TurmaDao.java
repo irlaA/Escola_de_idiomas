@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -80,11 +81,27 @@ public class TurmaDao<E> extends DAOgeneric<Turma> {
 		criteria.select(turma).where(cb.isNull(turma.get("professor")))
 								.orderBy(cb.asc(turma.get("idioma")));
 		listaTurmaSemProf.addAll(entityManager.createQuery(criteria).getResultList());
+		
 		entityTransaction.commit();
 		entityManager.close();
 		
 		return listaTurmaSemProf;
 	}
+	
+	/*
+	@SuppressWarnings("unchecked")
+	public List<Turma> turmaSemProf(Turma turma){
+		List<Turma> retornaTurmaSemProf = new ArrayList<Turma>();
+		EntityManager em = JPAutil.getEntityManager();
+		EntityTransaction entityT = em.getTransaction();
+		entityT.begin();
+		
+		retornaTurmaSemProf = (List<Turma>) em.createQuery("SELECT id_professor FROM " + turma.getProfessor().getId());
+		
+		entityT.commit();
+		em.close();
+		return retornaTurmaSemProf;
+	}	*/
 	
 	public Turma atualizar(Turma turma) {
 		EntityManager entityManager = JPAutil.getEntityManager();

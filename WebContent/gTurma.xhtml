@@ -32,15 +32,15 @@
 		
 			<h:panelGrid columns="4" rendered="#{turmaBean.existe}">
 			
-				<h:outputLabel id="campoProf" value="#{turmaBean.turma.professor.nome}" />
+			<h:outputLabel id="campoProf" value="#{turmaBean.turma.professor.nome}" />  
 				
-				<p:panelGrid columns="2">
+				<p:panelGrid columns="1">
 					<p:commandLink action="#{turmaBean.removerProfTurma()}" value="Remover" />
-					<p:commandLink action="#{turmaBean.podeMostrarProfBoolean()}" value="Mudar" update="form1"/>
+			<!-- 	<p:commandLink action="#{turmaBean.podeMostrarProfBoolean()}" value="Mudar" update="form1"/>	-->
 				</p:panelGrid>
 				
-				<p:dataTable value="#{turmaBean.professoresDisponiveis()}" 
-							var="pd" rendered="#{turmaBean.mostrarProfessorBoolean}">
+				<p:dataTable value="#{turmaBean.professoresDisponiveis()}"	var="pd" >
+			<!-- 	rendered="#{turmaBean.mostrarProfessorBoolean}">  -->
 					
 					<p:column headerText="Nome">
 						<h:outputText value="#{pd.nome}" />
