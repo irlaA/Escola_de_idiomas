@@ -40,6 +40,8 @@ public class TurmaDao<E> extends DAOgeneric<Turma> {
 		getEntityManager().getTransaction().commit();
 		super.excluirPorId(turma);
 	}
+	
+	
 
 	private void ordenarTurmaPorIdioma() {
 		EntityManager entityManager = JPAutil.getEntityManager();
@@ -105,6 +107,8 @@ public class TurmaDao<E> extends DAOgeneric<Turma> {
 		professor.getTurmasDoProfessor().add(turma);
 		atualizar(turma);
 	}
+	
+	
 
 	/*
 	 * public void removerAlunoTurma(Turma turma, Aluno aluno) {

@@ -5,13 +5,14 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
+
 import br.com.JPAutil.JPAutil;
 import br.com.entidades.Professor;
 import br.com.entidades.Turma;
 
 public class ProfessorDao<E> extends DAOgeneric<Professor> {
 	
-	private List<Professor> professores;
+	private List<Professor> listaProfessores;
 	
  	
 	
@@ -20,7 +21,7 @@ public class ProfessorDao<E> extends DAOgeneric<Professor> {
 			TurmaDao<Turma> daoTurma = new TurmaDao<Turma>();
 			daoTurma.removerProfessorTurma(turma);
 		}
-		getProfessores();
+		getListaProfessores();
 		return this;
 	}
 	
@@ -40,6 +41,8 @@ public class ProfessorDao<E> extends DAOgeneric<Professor> {
 		if(entityManager.isOpen()) {
 			profEncontrado = entityManager.find(Professor.class, id);
 		}
+		entityTransaction.commit();
+		entityManager.close();
 		return profEncontrado;
 	}
 	
@@ -49,14 +52,13 @@ public class ProfessorDao<E> extends DAOgeneric<Professor> {
 		return (List<Turma>) encontrarPorId(professor.getId()).getTurmasDoProfessor();
 	}
 
-
-	public List<Professor> getProfessores() {
-		return professores;
+	public List<Professor> getListaProfessores() {
+		return listaProfessores;
 	}
 
+	public void setListaProfessores(List<Professor> listaProfessores) {
+		this.listaProfessores = listaProfessores;
+	}
 
-
-	
-	
 
 }

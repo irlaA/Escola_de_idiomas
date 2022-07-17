@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+
 import br.com.JPAutil.JPAutil;
 
 public class DAOgeneric<E> {
@@ -47,22 +48,18 @@ public class DAOgeneric<E> {
 	
 	public void excluirPorId(E entidade) {
 		EntityManager entityManager = JPAutil.getEntityManager();
-		EntityTransaction entityTransaction = entityManager.getTransaction();
-		entityTransaction.begin();
-		
+		EntityTransaction entityT = entityManager.getTransaction();
+		entityT.begin();
+		 
 		Object id = JPAutil.getPrimaryKey(entidade);
+		entityManager.createQuery("DELETE FROM " + entidade.getClass().getCanonicalName()
+		+ " WHERE id = " + id).executeUpdate();
 		
-		entityManager
-		.createNativeQuery(
-				"delete from " + entidade.getClass(). 
-				getSimpleName().toLowerCase() + " where id =" + id)
-		.executeUpdate();
-
-		
-		entityTransaction.commit();;
-		entityManager.close();
+		entityT.commit();;
+		entityManager.close();	
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<E> getListaEndidadeId(Class<E> entidade){
 		EntityManager em = JPAutil.getEntityManager();
 		EntityTransaction entityT = em.getTransaction();
@@ -76,12 +73,14 @@ public class DAOgeneric<E> {
 		return retornaPorId;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<E> getListaEnditade(Class<E> entidade){
 		EntityManager entityManager = JPAutil.getEntityManager();
 		EntityTransaction entityTransaction = entityManager.getTransaction();
 		entityTransaction.begin();
 		
-		List<E> retorno = entityManager.createQuery("from " + entidade.getName()).getResultList();
+		List<E> retorno = entityManager.createQuery("FROM " + entidade.getName()).getResultList();
+		//List<E> retorno = entityManager.createQuery("from " + entidade.getName()).getResultList();
 		
 		entityTransaction.commit();
 		entityManager.close();

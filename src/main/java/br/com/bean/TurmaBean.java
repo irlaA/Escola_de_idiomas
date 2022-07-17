@@ -1,6 +1,7 @@
 package br.com.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -19,13 +20,14 @@ import br.com.entidades.Turma;
 @SessionScoped
 public class TurmaBean implements Serializable {
 
-	private Turma turma;
+	private Turma turma = new Turma();
 	private Aluno aluno;
 	private Professor professor;
-	private TurmaDao<Turma> daoTurma;
+	private TurmaDao<Turma> daoTurma = new TurmaDao<Turma>();
 	private AlunoDao<Aluno> daoAluno;
-	private ProfessorDao<Professor> daoProf;
-	private DAOgeneric<Turma> daoGenericT;
+	private ProfessorDao<Professor> daoProf = new ProfessorDao<Professor>();
+	private DAOgeneric<Turma> daoGenericT = new DAOgeneric<Turma>();
+	private List<Professor> listaProfessoresDisp =  new ArrayList<Professor>();
 
 	private boolean existe = false;
 	private boolean mostrarProfessorBoolean = false;
@@ -34,7 +36,7 @@ public class TurmaBean implements Serializable {
 	private List<Turma> listaTurmas;
 	
 	//turma
-	private void salvar() {
+	public void salvar() {
 		turma = daoGenericT.salvarMerge(turma);
 		listaTurmas.add(turma);
 		listarTurmas();
@@ -58,10 +60,15 @@ public class TurmaBean implements Serializable {
 		novaTurma();
 		
 	}
+	//deixa o form limpo
+	public void voltar() {
+		novaTurma();
+	}
+	
 	//turma
 	@PostConstruct
 	public void listarTurmas() {
-		listaTurmas = daoGenericT.getListaEndidadeId(Turma.class);
+		listaTurmas = daoGenericT.getListaEnditade(Turma.class);
 	}
  
 	
@@ -93,7 +100,11 @@ public class TurmaBean implements Serializable {
 		daoTurma.removerProfessorTurma(turma);
 	}
 	
-	
+	//professor 
+	public List<Professor> professoresDisponiveis(){
+		listaProfessoresDisp =  daoProf.getListaProfessores();
+		return listaProfessoresDisp;
+	}
 	
 	
 	public Turma getTurma() {
@@ -148,6 +159,14 @@ public class TurmaBean implements Serializable {
 
 	public boolean isMostrarAlunoBoolean() {
 		return mostrarAlunoBoolean;
+	}
+
+	public List<Professor> getListaProfessoresDisp() {
+		return listaProfessoresDisp;
+	}
+
+	public void setListaProfessoresDisp(List<Professor> listaProfessoresDisp) {
+		this.listaProfessoresDisp = listaProfessoresDisp;
 	}
 
 	

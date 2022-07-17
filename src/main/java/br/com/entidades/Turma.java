@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,6 +28,7 @@ public class Turma implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@Column(nullable = false)
 	private String idioma;
 	
 	private String horario;
@@ -36,7 +39,7 @@ public class Turma implements Serializable{
 	@JoinColumn(name = "id_professor")
 	private Professor professor;
 	
-	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE}, fetch = FetchType.EAGER)
 	@JoinTable(name = "matriculados", uniqueConstraints = {@UniqueConstraint(columnNames = {"id_turma", "id_aluno"})},
 	joinColumns = {@JoinColumn(name="id_turma")}, inverseJoinColumns = {@JoinColumn(name="id_aluno")} )
 	private List<Aluno> turmasAluno;

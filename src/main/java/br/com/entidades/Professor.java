@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,6 +31,9 @@ public class Professor implements Serializable{
 	@NotNull(message = "Campo Siape não pode estar vazio!")
 	private String siape;
 	
+	//Talvez colocar o ensino tambem, para seperar por turma
+	//private String linguaEnsino;
+	
 	private String formacao;
 	
 	private String email;
@@ -37,7 +41,7 @@ public class Professor implements Serializable{
 	@Enumerated(EnumType.STRING)
 	private Genero generoP;
 	
-	@OneToMany(mappedBy = "professor", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "professor", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
 	private List<Turma> turmasDoProfessor;
 	
 	

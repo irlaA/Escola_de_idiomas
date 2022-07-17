@@ -1,7 +1,11 @@
 package br.com.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
 import br.com.DAO.DAOgeneric;
 import br.com.DAO.ProfessorDao;
@@ -10,20 +14,23 @@ import br.com.entidades.Genero;
 import br.com.entidades.Professor;
 import br.com.entidades.Turma;
 
+@ManagedBean(name = "professorBean")
+@SessionScoped
 public class ProfessorBean implements Serializable{
 	
-	private Professor professor;
+	private Professor professor = new Professor();
 	private Turma turma;
 	private DAOgeneric<Professor> daoGenericP = new DAOgeneric<Professor>();
-	private ProfessorDao<Professor> daoProf;
-	private TurmaDao<Turma> daoTurma;
-	private List<Professor> professores;
+	private ProfessorDao<Professor> daoProf = new ProfessorDao<Professor>();
+	private TurmaDao<Turma> daoTurma = new TurmaDao<Turma>();
+	private List<Professor> listaDeProfessores = new ArrayList<Professor>();
 	
 	private boolean existe = false;
 	private boolean mostrarTurmasBoolean =  false;
 	
 	public void salvar() {
-		daoGenericP.salvarMerge(professor);
+		professor = daoGenericP.salvarMerge(professor);
+		getListDeProfessores();
 		novoProf();
 	}
 	
@@ -33,10 +40,22 @@ public class ProfessorBean implements Serializable{
 	}
 	
 	public void excluir() {
-		if(professores.contains(professor)) {
+		//daoGenericP.excluirPorId(professor);
+		//novoProf();
+		//getListDeProfessores();
+		if(listaDeProfessores.contains(professor)) {
 			daoGenericP.excluirPorId(professor);
+			getListDeProfessores();
 		}
 		novoProf();
+	}
+	
+	public void atualizar() {
+		listaDeProfessores = daoProf.getListaProfessores();
+	}
+	
+	public void getListDeProfessores() {
+		listaDeProfessores = daoGenericP.getListaEnditade(Professor.class);
 	}
 	
 	public Genero[] getGeneros() {
@@ -48,6 +67,7 @@ public class ProfessorBean implements Serializable{
 	}
 	
 	public List<Turma> turmasDoProfessor(){
+		//return daoProf.turmasMinistradasID(professor);
 		return (List<Turma>) professor.getTurmasDoProfessor();
 	}
 	
@@ -90,15 +110,12 @@ public class ProfessorBean implements Serializable{
 		return mostrarTurmasBoolean;
 	}
 
-	public List<Professor> getProfessores() {
-		return professores;
+	public List<Professor> getListaDeProfessores() {
+		return listaDeProfessores;
 	}
 
-	public void setProfessores(List<Professor> professores) {
-		this.professores = professores;
+	public void setListaDeProfessores(List<Professor> listaDeProfessores) {
+		this.listaDeProfessores = listaDeProfessores;
 	}
-	
-	
-	
 
 }

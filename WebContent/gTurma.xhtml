@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Cadastro de Turma</title>
+</h:head>
+
+<h:body>
+	<h:form id="form1">
+		<h:panelGrid columns="2">
+			<p:outputLabel for="campoIdioma" value="Idioma :"/>
+			<p:inputText id="campoIdioma" value="#{turmaBean.turma.idioma}"/>
+			
+			<p:outputLabel for="campoHora" value="Horário: "/>
+			<p:inputText id="campoHora" value="#{turmaBean.turma.horario}"/>
+			
+			<p:outputLabel for="campoSala" value="Sala"/>
+			<p:inputText id="campoSala" value="#{turmaBean.turma.sala}"/>
+			
+			<p:outputLabel for="campoProf" value="Professor: "/>
+		</h:panelGrid>	
+		
+		
+			<h:outputText value="" rendered="#{!turmaBean.existe}"/> <!--olhar dps  -->
+		
+		
+			<h:panelGrid columns="4" rendered="#{turmaBean.existe}">
+			
+				<h:outputLabel id="campoProf" value="#{turmaBean.turma.professor.nome}" />
+				
+				<p:panelGrid columns="2">
+					<p:commandLink action="#{turmaBean.removerProfTurma()}" value="Remover" />
+					<p:commandLink action="#{turmaBean.podeMostrarProfBoolean()}" value="Mudar" update="form1"/>
+				</p:panelGrid>
+				
+				<p:dataTable value="#{turmaBean.professoresDisponiveis()}" 
+							var="pd" rendered="#{turmaBean.mostrarProfessorBoolean}">
+					
+					<p:column headerText="Nome">
+						<h:outputText value="#{pd.nome}" />
+					</p:column>
+					
+					<p:column headerText="Siape">
+						<h:outputText value="#{pd.siape}" />
+					</p:column>
+					
+					<p:column headerText="Formação">
+						<h:outputText value="#{pd.formacao}" />
+					</p:column>
+					
+					<p:column headerText="Siape">
+						<h:outputText value="#{pd.turmasDoProfessor.size()}" />
+					</p:column>
+					
+					<p:column headerText="Adcionar">
+						<h:commandLink action="#{turmaBean.addProfessor()}" value="Add" >
+							<f:setPropertyActionListener value="#{pd}" target="#{turmaBean.professor}" />
+						</h:commandLink>
+					</p:column>
+					
+				</p:dataTable>
+			</h:panelGrid>
+			
+			<h:outputText rendered="#{!turmaBean.existe}" />
+			
+		
+		
+		<p:commandButton value="Salvar" action="#{turmaBean.salvar()}"/>
+		<p:commandButton value="Voltar" action="#{turmaBean.voltar()}" update="form1"/>
+		
+	</h:form>
+	
+	<h:form>
+		<p:dataTable value="#{turmaBean.listaTurmas}" var="t">
+			<p:column headerText="Idioma">
+				<h:outputText value="#{t.idioma}" />
+			</p:column>
+			
+			<p:column headerText="Horário">
+				<h:outputText value="#{t.horario}" />
+			</p:column>
+			
+			<p:column headerText="Sala">
+				<h:outputText value="#{t.sala}" />
+			</p:column>
+			
+			<p:column headerText="Professor">
+				<h:outputText value="#{t.professor.nome}" />
+			</p:column>
+			
+			<p:column headerText="Quant. de Alunos">
+				<h:outputText value="#{t.turmasAluno.size()}" />
+			</p:column>
+			
+			<p:column headerText="Ações">
+				<p:commandLink value="Editar" update="form1">
+					<f:setPropertyActionListener value="#{t}" target="#{turmaBean.turma}"/>
+				</p:commandLink>
+				| <!-- separador -->
+				<p:commandLink value="Excluir" action="#{turmaBean.excluir()}">
+					<f:setPropertyActionListener value="#{t}" target="#{turmaBean.turma}" />
+				</p:commandLink>
+			</p:column>
+		
+		</p:dataTable>
+	
+	</h:form>
+	
+	
+	
+	
+</h:body>
+
+</html>
