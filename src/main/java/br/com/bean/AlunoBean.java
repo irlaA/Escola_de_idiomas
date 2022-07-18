@@ -18,28 +18,32 @@ import br.com.entidades.Turma;
 @SessionScoped
 public class AlunoBean implements Serializable{
 	
-	private AlunoDao<Aluno> daoAluno;
+	private AlunoDao<Aluno> daoAluno = new AlunoDao<Aluno>();
 	private DAOgeneric<Aluno> daoGenericA = new DAOgeneric<Aluno>();
+	private TurmaDao<Turma> daoTurma = new TurmaDao<Turma>();
 	private List<Aluno> listaAlunos;
-	private Turma turma;
-	private Aluno aluno;
+	private Turma turma = new Turma();
+	private Aluno aluno = new Aluno();
 	
 	private boolean existe = false;
 	private boolean turmasBoolean = false;
 	
 	
 	
-	public String salvar() {
+	public void salvar() {
 		//aluno = daoAluno.salvarMerge(aluno);
-		aluno = daoGenericA.salvarMerge(aluno);
+		//aluno = daoGenericA.salvarMerge(aluno);
+		daoGenericA.salvarMerge(aluno);
 		listaAlunos.add(aluno);
 		listarAlunos();
-		return "";
+		
 	}
+
 	
 	public void novoAluno() {
 		aluno = new Aluno();
 		existe = false;
+		turmasBoolean = false;
 	}
 	
 	public void excluir() {
@@ -52,25 +56,34 @@ public class AlunoBean implements Serializable{
 		
 	}
 	
+	public void voltar() {
+		novoAluno();
+	}
+	
 	
 	@PostConstruct
 	public void listarAlunos() {
-		listaAlunos = daoGenericA.getListaEndidadeId(Aluno.class);
+		listaAlunos = daoGenericA.getListaEnditade(Aluno.class);
 	}
 	
 	public void matricularAlunoTurma() {
 		daoAluno.matricularAlunoNaTurma(aluno, turma);
+		
 	}
 	
-	public void removerAlunoTurma() {
-		daoAluno.removerAlunoTurma(turma, aluno);
+	public void removerTurmaAluno() {
+		daoAluno.removerTurmaAluno(turma, aluno);
+		
 	}
 	
-	public List<Turma> turmasDisponiveis(Aluno aluno){
-		TurmaDao<Turma> daoTurma = new TurmaDao<Turma>();
+	public List<Turma> turmasDisponiveis(){
 		List<Turma> turmasDisponiveis = daoTurma.getTurmas();
 		turmasDisponiveis.removeAll(aluno.getTurmasMatriculadas());
 		return turmasDisponiveis;
+	}
+	
+	public List<Turma> turmaDoAlunoId(){
+		return aluno.getTurmasMatriculadas();
 	}
 	
 	
@@ -89,9 +102,17 @@ public class AlunoBean implements Serializable{
 		turmasBoolean = false;
 	}
 
+	
+
 	public List<Aluno> getListaAlunos() {
 		return listaAlunos;
 	}
+
+
+	public void setListaAlunos(List<Aluno> listaAlunos) {
+		this.listaAlunos = listaAlunos;
+	}
+
 
 	public boolean isExiste() {
 		return existe;
@@ -114,7 +135,20 @@ public class AlunoBean implements Serializable{
 	public DAOgeneric<Aluno> getDaoGenericA() {
 		return daoGenericA;
 	}
+
+
+	public Turma getTurma() {
+		return turma;
+	}
+
+
+	public void setTurma(Turma turma) {
+		this.turma = turma;
+	}
+
+
 	
+
 	
 	
 }

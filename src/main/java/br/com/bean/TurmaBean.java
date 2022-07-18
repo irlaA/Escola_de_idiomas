@@ -1,7 +1,6 @@
 package br.com.bean;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -27,8 +26,6 @@ public class TurmaBean implements Serializable {
 	private AlunoDao<Aluno> daoAluno;
 	private ProfessorDao<Professor> daoProf = new ProfessorDao<Professor>();
 	private DAOgeneric<Turma> daoGenericT = new DAOgeneric<Turma>();
-	private DAOgeneric<Professor> daoGenericP = new DAOgeneric<Professor>();
-	private List<Professor> listaProfessoresDisp =  new ArrayList<Professor>();
 
 	private boolean existe = false;
 	private boolean mostrarProfessorBoolean = false;
@@ -75,7 +72,7 @@ public class TurmaBean implements Serializable {
 	
 	//aluno
 	public void removerAlunoTurma() {
-		daoAluno.removerAlunoTurma(turma, aluno);
+		daoAluno.removerTurmaAluno(turma, aluno);
 	}
 	
 	//aluno

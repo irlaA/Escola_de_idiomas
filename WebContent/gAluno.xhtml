@@ -13,10 +13,138 @@
 
 <h:body>
 	
-	<h:form>
+	<h:form id ="form1">
+	
+	<h:panelGrid columns="2">
+	
+		<p:outputLabel for="campoNome" value="Nome: "/>
+		<p:inputText id="campoNome" value="#{alunoBean.aluno.nome}"/>
 		
+		<p:outputLabel for="campoMatricula" value="Matrícula: "/>
+		<p:inputMask mask="9999999" id="campoMatricula" value="#{alunoBean.aluno.matricula}"/>
+		
+		<p:outputLabel for="campoDataN" value="Data de nascimento: "/>
+		<p:inputMask id="campoDataN" mask="99/99/9999" value="#{alunoBean.aluno.dataDeNascimento}">
+			<f:convertDateTime type="date" pattern="dd/MM/yyyy" timeZone="GMT-3"/>
+		</p:inputMask>	
+		
+		<p:outputLabel for="campoGenero" value="Gênero: "/>
+		<p:selectOneRadio id="campoGenero" value="#{alunoBean.aluno.generoA}">
+			<f:selectItems value="#{alunoBean.generos}"/>
+		</p:selectOneRadio>
+	
+	</h:panelGrid>
+				
+		<p:outputLabel value="Turmas Matriculadas: "/>
+		
+		<h:panelGrid columns="1" rendered="#{alunoBean.existe}">
+		
+			<p:dataTable value="#{alunoBean.turmaDoAlunoId()}" var="ta">
+				<p:column headerText="Idioma">
+					<h:outputText value="#{ta.idioma}" />
+				</p:column>
+				
+				<p:column headerText="Professor">
+					<h:outputText value="#{ta.professor.nome}" />
+				</p:column>
+				
+				<p:column headerText="Sala">
+					<h:outputText value="#{ta.sala}" />
+				</p:column>
+				
+				<p:column headerText="Horario">
+					<h:outputText value="#{ta.sala}" />
+				</p:column>
+				
+				<p:column headerText="Remover">
+					<p:commandLink action="#{alunoBean.removerTurmaAluno()}" value="Remover">
+						<f:setPropertyActionListener value="#{ta}" target="#{alunoBean.turma}" />
+					</p:commandLink>
+				</p:column>
+				
+			</p:dataTable>
+			
+			<p:outputLabel value="Turmas Disponiveis: "/>
+			<p:dataTable value="#{alunoBean.turmasDisponiveis()}" var="td">
+				<p:column headerText="Idioma">
+					<h:outputText value="#{td.idioma}" />
+				</p:column>
+				
+				<p:column headerText="Professor">
+					<h:outputText value="#{td.professor.nome}" />
+				</p:column>
+				
+				<p:column headerText="Sala">
+					<h:outputText value="#{td.sala}" />
+				</p:column>
+				
+				<p:column headerText="Horário">
+					<h:outputText value="#{td.horario}" />
+				</p:column>
+				
+				<p:column headerText="Cadastrar">
+					<p:commandLink action="#{alunoBean.matricularAlunoTurma()}" value="Add">
+						<f:setPropertyActionListener value="#{td}" target="#{alunoBean.turma}" />
+					</p:commandLink>
+				</p:column>
+				
+			</p:dataTable>	
+		</h:panelGrid>
+		
+		<h:outputText rendered="#{!alunoBean.existe}" />
+		
+		<p:commandButton value="Salvar" action="#{alunoBean.salvar()}" update="form2"/>
+		<p:commandButton value="Voltar" action="#{alunoBean.voltar()}" update="form1"/>
+		
+	</h:form>
+	
+	<h:form id="form2">
+	
+		
+		<p:dataTable value="#{alunoBean.listaAlunos}" var="a">
+			
+			<p:column headerText="Nome">
+				<h:outputText value="#{a.nome}" />
+			</p:column>
+			
+			<p:column headerText="Matrícula">
+				<h:outputText value="#{a.matricula}" />
+			</p:column>
+			
+			<p:column headerText="Gênero">
+				<h:outputText value="#{a.generoA}" />
+			</p:column>
+			
+			<p:column headerText="Data Nascimento">
+				<h:outputText value="#{a.dataDeNascimento}" >
+					<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+				</h:outputText>
+			</p:column>
+			
+			<p:column headerText="Quant. Turmas">
+				<h:outputText value="#{a.turmasMatriculadas.size()}" />
+			</p:column>
+			
+			<p:column headerText="Ações">
+				<p:commandLink value="Endereço" >
+					<f:setPropertyActionListener value="#{a}" target="#{alunoBean.aluno}" />
+				</p:commandLink>
+				| <!-- separador -->
+				<p:commandLink value="Editar" update="form1">
+					<f:setPropertyActionListener value="#{a}" target="#{alunoBean.aluno}" />
+				</p:commandLink>
+				| <!-- separador -->
+				<p:commandLink value="Excluir" action="#{alunoBean.excluir()}">
+					<f:setPropertyActionListener value="#{a}" target="#{alunoBean.aluno}" />
+				</p:commandLink>
+				
+			</p:column>
+			
+		</p:dataTable>
 	
 	</h:form>
+	
+	
 </h:body>
 
 </html>
