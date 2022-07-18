@@ -39,6 +39,10 @@ public class ProfessorBean implements Serializable{
 		existe = false;
 	}
 	
+	public void voltar() {
+		novoProf();
+	}
+	
 	public void excluir() {
 		//daoGenericP.excluirPorId(professor);
 		//novoProf();

@@ -34,7 +34,7 @@ public class Aluno implements Serializable {
 	
 	private String nome;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String matricula;
 	
 	@Enumerated(EnumType.STRING)

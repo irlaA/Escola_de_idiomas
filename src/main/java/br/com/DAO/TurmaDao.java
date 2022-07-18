@@ -34,12 +34,19 @@ public class TurmaDao<E> extends DAOgeneric<Turma> {
 	}
 
 	public void removerProfessorTurma(Turma turma) {
-		getEntityManager().getTransaction().begin();
-		// exclui da lista turmaDoProfessor pegando o id do professor
-		String excluirProfTurma = "DELETE FROM turmas WHERE id_professor = " + turma.getProfessor().getId();
-		getEntityManager().createNativeQuery(excluirProfTurma).executeUpdate();
-		getEntityManager().getTransaction().commit();
-		super.excluirPorId(turma);
+		if(turma.getProfessor() != null) {
+			ProfessorDao<Professor> daoProf = new ProfessorDao<Professor>();
+			Professor profSelecionado = daoProf.encontrarPorId(turma.getProfessor().getId());
+			profSelecionado.getTurmasDoProfessor().remove(turma);
+			
+			Turma turmaSelec = encontrarPorId(turma.getId());
+			turmaSelec.setProfessor(null);
+			
+			daoProf.atualizar(profSelecionado);
+			daoProf.retornaProf();
+			atualizar(turmaSelec);
+		}
+
 	}
 	
 	

@@ -27,7 +27,7 @@ public class Professor implements Serializable{
 	
 	private String nome;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	@NotNull(message = "Campo Siape não pode estar vazio!")
 	private String siape;
 	

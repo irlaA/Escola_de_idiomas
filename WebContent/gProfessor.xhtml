@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
+<ui:decorate xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	template="menu.xhtml">
 
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
@@ -12,141 +12,154 @@
 </h:head>
 
 <h:body>
-
-	<h:form id="form1">
-		<h:panelGrid columns="2">
-			<p:outputLabel for="campoNome" value="Nome:" />
-			<p:inputText  id="campoNome" value="#{professorBean.professor.nome}"/>
-					
-			<p:outputLabel for="campoSiape" value="Siape:" />
-			<p:inputText id="campoSiape" value="#{professorBean.professor.siape}"/>
+	<div align="center">
+	<p:panel header="CADASTRO DE PROFESSORES">
+		<h:form id="form1">
+		
+			<h:panelGrid columns="2">
 			
-			<p:outputLabel for="campoFor" value="Formação: " />
-			<p:inputText id="campoFor" value="#{professorBean.professor.formacao}"/>
-			
-			<p:outputLabel for="campoEmail" value="Email: " />
-			<p:inputText id="campoEmail" value="#{professorBean.professor.email}"/>
-			
-			<p:outputLabel for="campoGenero" value="Gênero:" />
-			<p:selectOneRadio id="campoGenero" value="#{professorBean.professor.generoP}">
-				<f:selectItems value="#{professorBean.generos}" />
-			</p:selectOneRadio>
-			
-			<p:outputLabel value="Turmas do professor"/>
-			<h:panelGrid columns="1" rendered="#{professorBean.existe}">
-				<p:dataTable value="#{professorBean.turmasDoProfessor()}" var="tp">
-					<p:column headerText="Idioma">
-					<!-- <f:facet name="header">Idioma</f:facet> -->
-						<h:outputText value="#{tp.idioma}" />
-					</p:column>
-					
-					<p:column headerText="Sala">
-					<!-- <f:facet name="header">Sala</f:facet>  -->
-						<h:outputText value="#{tp.sala}" />
-					</p:column>
-					
-					<p:column headerText="Horário">
-					<!-- <f:facet name="header">Horario</f:facet>  -->
-						<h:outputText value="#{tp.horario}" />
-					</p:column>
-					
-					<p:column headerText="Ações">
-					<!-- <f:facet name="header">Excluir</f:facet>  -->
-						<h:commandLink action="#{professorBean.removerTurma()}" value="Excluir" >
-							<f:setPropertyActionListener value="#{tp}" target="#{professorBean.turma}" />
-						</h:commandLink>
-					</p:column>
-				</p:dataTable>
-				
-		<!--	<p:commandButton action="#{professorBean.mostrarTurmasBollean()}" value="Adicionar" /> -->
-				
-				<p:dataTable value="#{professorBean.turmasDisponiveis()}" var="td" >
-		<!-- 					rendered="#{professorBean.mostrarTurmasBoolean}">   -->
+				<p:outputLabel for="campoNome" value="Nome:" />
+				<p:inputText  id="campoNome" value="#{professorBean.professor.nome}" required="true"/>
 						
+				<p:outputLabel for="campoSiape" value="Siape:" />
+				<p:inputMask mask="9999999" id="campoSiape" value="#{professorBean.professor.siape}" required="true"/>
+				
+				<p:outputLabel for="campoFor" value="Formação: " />
+				<p:inputText id="campoFor" value="#{professorBean.professor.formacao}"/>
+				
+				<p:outputLabel for="campoEmail" value="Email: " />
+				<p:inputText id="campoEmail" value="#{professorBean.professor.email}"/>
+				
+				<p:outputLabel for="campoGenero" value="Gênero:" />
+				<p:selectOneRadio id="campoGenero" value="#{professorBean.professor.generoP}">
+					<f:selectItems value="#{professorBean.generos}" />
+				</p:selectOneRadio>
+				
+			</h:panelGrid>	<!-- esse end subistitiu o comentedo de baixo -->
+				
+				
+				<h:panelGrid columns="3" rendered="#{professorBean.existe}">
+				
+				<p:outputLabel value="Turmas do Professor: "/>
+				
+					<p:dataTable value="#{professorBean.turmasDoProfessor()}" var="tp">
 						<p:column headerText="Idioma">
-				<!--		<f:facet name="header">Idioma</f:facet>		-->
-							<h:outputText value="#{td.idioma}" />
+						<!-- <f:facet name="header">Idioma</f:facet> -->
+							<h:outputText value="#{tp.idioma}" />
 						</p:column>
 						
 						<p:column headerText="Sala">
-				<!-- 		<f:facet name="header">Sala</f:facet>  -->
-							<h:outputText value="#{td.sala}" />
+						<!-- <f:facet name="header">Sala</f:facet>  -->
+							<h:outputText value="#{tp.sala}" />
 						</p:column>
 						
-						<p:column headerText="Horario">
-				<!-- 		<f:facet name="header">Horario</f:facet>  -->
-							<h:outputText value="#{td.horario}" />
+						<p:column headerText="Horário">
+						<!-- <f:facet name="header">Horario</f:facet>  -->
+							<h:outputText value="#{tp.horario}" />
 						</p:column>
 						
-						<p:column headerText="Cadastrar">
-					<!-- 	<f:facet name="header">Cadastrar</f:facet>   -->
-							<h:commandLink action="#{professorBean.addProfATurma()}" value="Cadastrar" >
-								<f:setPropertyActionListener value="#{td}" target="#{professorBean.turma}" />
-							</h:commandLink>
+						<p:column headerText="Ações">
+						<!-- <f:facet name="header">Excluir</f:facet>  -->
+							<p:commandLink action="#{professorBean.removerTurma()}" value="Excluir" >
+								<f:setPropertyActionListener value="#{tp}" target="#{professorBean.turma}" />
+							</p:commandLink>
 						</p:column>
-				</p:dataTable>
-			</h:panelGrid>
+					</p:dataTable>
+					
+					
+			<!--	<p:commandButton action="#{professorBean.mostrarTurmasBollean()}" value="Adicionar" /> -->
+					<p:outputLabel value="Turmas Disponiveis: "/>
+					
+					<p:dataTable value="#{professorBean.turmasDisponiveis()}" var="td" >
+			<!-- 					rendered="#{professorBean.mostrarTurmasBoolean}">   -->
+							
+							<p:column headerText="Idioma">
+					<!--		<f:facet name="header">Idioma</f:facet>		-->
+								<h:outputText value="#{td.idioma}" />
+							</p:column>
+							
+							<p:column headerText="Sala">
+					<!-- 		<f:facet name="header">Sala</f:facet>  -->
+								<h:outputText value="#{td.sala}" />
+							</p:column>
+							
+							<p:column headerText="Horario">
+					<!-- 		<f:facet name="header">Horario</f:facet>  -->
+								<h:outputText value="#{td.horario}" />
+							</p:column>
+							
+							<p:column headerText="Cadastrar">
+						<!-- 	<f:facet name="header">Cadastrar</f:facet>   -->
+								<p:commandLink action="#{professorBean.addProfATurma()}" value="Cadastrar">
+									<f:setPropertyActionListener value="#{td}" target="#{professorBean.turma}" />
+								</p:commandLink>
+							</p:column>
+					</p:dataTable>
+				</h:panelGrid>
+				
+				<h:outputText rendered="#{!professorBean.existe}" />
+				
+		<!-- </h:panelGrid> -->
 			
-			<h:outputText rendered="#{!professorBean.existe}" />
+			<p:commandButton action="#{professorBean.salvar()}" value="Salvar" update="form2"/>
+			<p:commandButton value="Voltar" action="#{professorBean.voltar()}" update="form1"/>
 			
-		</h:panelGrid>
-		
-		<p:commandButton action="#{professorBean.salvar()}" value="Salvar" />
-		<p:commandButton value="Cancelar" update="form1"/>
-		
-	</h:form>
+		</h:form>
+	</p:panel>
 		<br/>
-	<h:form id="form2" >
-	
-		<p:panel>
-			<p:commandButton value="Listar" action="#{professorBean.getListDeProfessores()}" update="form2"/>
-			<p:dataTable value="#{professorBean.listaDeProfessores}" var="p">
-				<p:column headerText="Nome">
-		 <!--	    <f:facet name="header">Nome</f:facet>  -->
-					<h:outputText value="#{p.nome}" />
-				</p:column>
-				
-				<p:column headerText="Siape">
-			<!-- 	<f:facet name="header">Siape</f:facet>  -->
-					<h:outputText value="#{p.siape}" />
-				</p:column>
-				
-				<p:column headerText="Formação">
-			<!-- 	<f:facet name="header">Formação</f:facet>  -->
-					<h:outputText value="#{p.formacao}" />
-				</p:column>
-				
-				<p:column headerText="Email">
-			<!-- 	<f:facet name="header">Email</f:facet> -->
-					<h:outputText value="#{p.email}" />
-				</p:column>
-				
-				<p:column headerText="Gênero">
-			<!-- 	<f:facet name="header">Gênero</f:facet>  -->
-					<h:outputText value="#{p.generoP}" />
-				</p:column>
-				
-				<p:column headerText="Quant. de turmas">
-			<!-- 	<f:facet name="header">Total de <br /> turmas</f:facet> -->
-					<h:outputText value="#{p.turmasDoProfessor.size()}" />
-				</p:column>
-				
-				<p:column headerText="Ações">
-		<!-- 		<f:facet name="header">Ações</f:facet>   -->
-					<p:commandLink value="Editar" update="form1" >
-						<f:setPropertyActionListener value="#{p}" target="#{professorBean.professor}" />
-					</p:commandLink>
-						|  <!-- espaço para serpar Editar de Excluir -->
-					<p:commandLink action="#{professorBean.excluir()}" value="Excluir" update="form2" >
-						<f:setPropertyActionListener value="#{p}" target="#{professorBean.professor}" />
-					</p:commandLink>
-				</p:column>
-			
-			</p:dataTable>
+	<p:panel header="PROFESSORES CADASTRADOS">
+		<h:form id="form2" >
 		
-		</p:panel>
-	</h:form>
-
+		
+		<!-- 	<p:commandButton value="Listar" action="#{professorBean.getListDeProfessores()}" update="form2"/>   -->
+				<p:dataTable value="#{professorBean.listaDeProfessores}" var="p">
+					<p:column headerText="Nome">
+			 <!--	    <f:facet name="header">Nome</f:facet>  -->
+						<h:outputText value="#{p.nome}" />
+					</p:column>
+					
+					<p:column headerText="Siape">
+				<!-- 	<f:facet name="header">Siape</f:facet>  -->
+						<h:outputText value="#{p.siape}" />
+					</p:column>
+					
+					<p:column headerText="Formação">
+				<!-- 	<f:facet name="header">Formação</f:facet>  -->
+						<h:outputText value="#{p.formacao}" />
+					</p:column>
+					
+					<p:column headerText="Email">
+				<!-- 	<f:facet name="header">Email</f:facet> -->
+						<h:outputText value="#{p.email}" />
+					</p:column>
+					
+					<p:column headerText="Gênero">
+				<!-- 	<f:facet name="header">Gênero</f:facet>  -->
+						<h:outputText value="#{p.generoP}" />
+					</p:column>
+					
+					<p:column headerText="Quant. de turmas">
+				<!-- 	<f:facet name="header">Total de <br /> turmas</f:facet> -->
+						<h:outputText value="#{p.turmasDoProfessor.size()}" />
+					</p:column>
+					
+					<p:column headerText="Ações">
+			<!-- 		<f:facet name="header">Ações</f:facet>   -->
+						<p:commandLink value="Editar" update="form1" >
+							<f:setPropertyActionListener value="#{p}" target="#{professorBean.professor}" />
+						</p:commandLink>
+							|  <!-- espaço para serpar Editar de Excluir -->
+						<p:commandLink action="#{professorBean.excluir()}" value="Excluir" update="form2">
+							<f:setPropertyActionListener value="#{p}" target="#{professorBean.professor}" />
+						</p:commandLink>
+					</p:column>
+				
+				</p:dataTable>
+			
+			
+		</h:form>
+	</p:panel>
+	</div>
 </h:body>
 
-</html>
+</ui:decorate>

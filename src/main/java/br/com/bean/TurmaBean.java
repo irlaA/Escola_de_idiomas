@@ -96,13 +96,15 @@ public class TurmaBean implements Serializable {
 	//professor
 	public void removerProfTurma() {
 		daoTurma.removerProfessorTurma(turma);
+		//daoProf.removerProfDaTurma(professor, turma);
 	}
 	
 	//professor 
 	public List<Professor> professoresDisponiveis(){
 		// listaProfessoresDisp =  daoGenericP.getListaEndidadeId(Professor.class);
 		 //return listaProfessoresDisp;
-		return daoProf.getListaProfessores();
+		return daoProf.retornaProf();
+		//return daoProf.getListaProfessores();
 	}
 	
 	

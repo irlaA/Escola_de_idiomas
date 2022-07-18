@@ -30,7 +30,7 @@ public class DAOgeneric<E> {
 		
 		E retorno = entityManager.merge(entidade);
 		
-		entityTransaction.commit();;
+		entityTransaction.commit();
 		entityManager.close();
 		return retorno;
 	}
