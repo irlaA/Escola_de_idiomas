@@ -11,7 +11,6 @@ import br.com.DAO.AlunoDao;
 import br.com.DAO.DAOgeneric;
 import br.com.DAO.TurmaDao;
 import br.com.entidades.Aluno;
-import br.com.entidades.Endereco;
 import br.com.entidades.Genero;
 import br.com.entidades.Turma;
 
@@ -84,12 +83,6 @@ public class AlunoBean implements Serializable{
 	
 	public List<Turma> turmaDoAlunoId(){
 		return aluno.getTurmasMatriculadas();
-	}
-	
-	public String cadastrarEndereco() {
-			return "cEndereco.jsf";
-	
-		
 	}
 	
 	

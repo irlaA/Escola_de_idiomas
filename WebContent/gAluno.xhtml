@@ -25,6 +25,9 @@
 			<p:outputLabel for="campoMatricula" value="Matrícula: "/>
 			<p:inputMask mask="9999999" id="campoMatricula" value="#{alunoBean.aluno.matricula}" required="true"/>
 			
+			<p:outputLabel for="campoEmail" value="Email: " />
+			<p:inputText id="campoEmail" value="#{alunoBean.aluno.email}"/>
+			
 			<p:outputLabel for="campoDataN" value="Data de nascimento: "/>
 			<p:inputMask id="campoDataN" mask="99/99/9999" value="#{alunoBean.aluno.dataDeNascimento}">
 				<f:convertDateTime type="date" pattern="dd/MM/yyyy" timeZone="GMT-3"/>
@@ -119,6 +122,10 @@
 					<h:outputText value="#{a.matricula}" />
 				</p:column>
 				
+				<p:column headerText="Email">
+					<h:outputText value="#{a.email}" />
+				</p:column>
+				
 				<p:column headerText="Gênero">
 					<h:outputText value="#{a.generoA}" />
 				</p:column>
@@ -133,11 +140,7 @@
 					<h:outputText value="#{a.turmasMatriculadas.size()}" />
 				</p:column>
 				
-				<p:column headerText="Ações">
-			<!-- 	<p:commandLink value="Endereço" action="#{alunoBean.cadastrarEndereco()}" >
-						<f:setPropertyActionListener value="#{a}" target="#{alunoBean.aluno}" />
-					</p:commandLink>    -->
-				
+				<p:column headerText="Ações">				
 					<p:commandLink value="Editar" update="form1">
 						<f:setPropertyActionListener value="#{a}" target="#{alunoBean.aluno}" />
 					</p:commandLink>

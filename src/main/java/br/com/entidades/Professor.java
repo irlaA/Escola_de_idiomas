@@ -49,8 +49,10 @@ public class Professor implements Serializable{
 		this.turmasDoProfessor =  new ArrayList<Turma>();
 	}
 	
+	
 
-	public Professor(String nome, String siape, String formacao, String email, Genero generoP) {
+	public Professor(String nome, @NotNull(message = "Campo Siape não pode estar vazio!") String siape, String formacao,
+			String email, Genero generoP, List<Turma> turmasDoProfessor) {
 		super();
 		this.nome = nome;
 		this.siape = siape;
@@ -58,8 +60,7 @@ public class Professor implements Serializable{
 		this.email = email;
 		this.generoP = generoP;
 		this.turmasDoProfessor = new ArrayList<Turma>();
-	}
-	
+	}	
 	
 
 	public Long getId() {

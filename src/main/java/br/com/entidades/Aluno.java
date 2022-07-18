@@ -9,7 +9,6 @@ import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -20,6 +19,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 
 
@@ -35,16 +35,17 @@ public class Aluno implements Serializable {
 	private String nome;
 	
 	@Column(nullable = false, unique = true)
+	@NotNull(message = "Campo Matricula não pode estar vazio!")
 	private String matricula;
+	
+	
+	private String email;
 	
 	@Enumerated(EnumType.STRING)
 	private Genero generoA;
 	
 	@Temporal(TemporalType.DATE)
 	private Date dataDeNascimento;
-	
-	@Embedded
-	private Endereco endereço;
 	
 	@ManyToMany(mappedBy = "turmasAluno", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
 	private List<Turma> turmasMatriculadas;
@@ -53,15 +54,18 @@ public class Aluno implements Serializable {
 	public Aluno() {
 		this.turmasMatriculadas = new ArrayList<Turma>();
 	}
+	
+	
 
-	public Aluno(String nome, String matricula, Genero generoA, Date dataDeNascimento) {
+	public Aluno(String nome, @NotNull(message = "Campo Matricula não pode estar vazio!") String matricula,
+			String email, Genero generoA, Date dataDeNascimento) {
 		super();
 		this.nome = nome;
 		this.matricula = matricula;
+		this.email = email;
 		this.generoA = generoA;
 		this.dataDeNascimento = dataDeNascimento;
 	}
-	
 	
 	
 	public Long getId() {
@@ -104,6 +108,14 @@ public class Aluno implements Serializable {
 		this.dataDeNascimento = dataDeNascimento;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public List<Turma> getTurmasMatriculadas() {
 		return turmasMatriculadas;
 	}
@@ -111,15 +123,6 @@ public class Aluno implements Serializable {
 	public void setTurmasMatriculadas(List<Turma> turmasMatriculadas) {
 		this.turmasMatriculadas = turmasMatriculadas;
 	}
-
-	public Endereco getEndereço() {
-		return endereço;
-	}
-
-	public void setEndereço(Endereco endereço) {
-		this.endereço = endereço;
-	}
-
 
 	@Override
 	public int hashCode() {

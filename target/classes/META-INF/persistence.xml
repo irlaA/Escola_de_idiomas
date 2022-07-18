@@ -9,7 +9,6 @@
 		<class>br.com.entidades.Aluno</class>
 		<class>br.com.entidades.Turma</class>
 		<class>br.com.entidades.Professor</class>
-		<class>br.com.entidades.Endereco</class>
 	
 		<properties>
 		
